@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django - Framework Web Profesional</title>
+    <style>
+        /* ------------------- ESTILOS BASE ------------------- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body { height: 100%; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #f0f0f0;
+            background: #000;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Fondo tipo Matrix (canvas) */
+        .glitch-background {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            opacity: 0.28; /* más sutil para que el texto siga legible */
+        }
+
+        /* ------------------- NAVBAR ------------------- */
+        nav {
+            background: linear-gradient(135deg, rgba(26, 58, 82, 0.95), rgba(44, 82, 130, 0.95));
+            backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+        }
+
+        .nav-container {
+            max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px;
+        }
+
+        .logo { color: #fff; font-size: 1.8em; font-weight: bold; padding: 15px 0; text-decoration: none; }
+
+        nav ul { list-style: none; display: flex; gap: 6px; }
+        nav a {
+            color: white; text-decoration: none; padding: 16px 14px; font-size: 0.95em; font-weight: 500;
+            border-bottom: 3px solid transparent; transition: all 0.22s ease;
+        }
+        nav a:hover { background: rgba(255,255,255,0.06); border-bottom-color: #61dca3; }
+
+        /* ------------------- HEADER ------------------- */
+        header {
+            position: relative;
+            background: linear-gradient(135deg, rgba(26, 58, 82, 0.72), rgba(44, 82, 130, 0.72));
+            color: white; text-align: center; padding: 110px 20px; min-height: 68vh; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+        }
+
+        .header-content { position: relative; z-index: 2; backdrop-filter: blur(2px); padding: 36px; border-radius: 18px; background: rgba(0,0,0,0.28); }
+        header h1 { font-size: 3.2em; margin-bottom: 10px; font-weight: 700; text-shadow: 0 0 20px rgba(97, 220, 163, 0.6); }
+        header p { font-size: 1.15em; opacity: 0.95; font-weight: 300; }
+
+        /* ------------------- SECCIONES (más transparentes) ------------------- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+
+        section {
+            background: rgba(26,58,82,0.22); /* más transparente para dejar ver la Matrix */
+            backdrop-filter: blur(8px);
+            margin: 36px auto; padding: 40px; border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.45); border: 1px solid rgba(97,220,163,0.08);
+        }
+
+        section h2 { color: #61dca3; font-size: 2.2em; margin-bottom: 18px; border-left: 5px solid #61dca3; padding-left: 18px; font-weight: 700; }
+        section p { font-size: 1.02em; color: rgba(255,255,255,0.92); line-height: 1.75; text-align: justify; }
+
+        .highlight { background: rgba(97,220,163,0.08); padding: 18px; border-radius: 8px; border-left: 4px solid #61dca3; margin: 14px 0; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin: 22px 0; }
+
+        /* tarjetas más transparentes */
+        .card {
+            background: rgba(255,255,255,0.04); /* muy transparente */
+            padding: 22px; border-radius: 10px; border: 1px solid rgba(97,220,163,0.06);
+            transition: transform 0.22s ease, box-shadow 0.22s ease; box-shadow: 0 6px 14px rgba(0,0,0,0.45);
+        }
+        .card:hover { transform: translateY(-6px); box-shadow: 0 12px 26px rgba(97,220,163,0.12); }
+
+        .card h3 { color: #61dca3; margin-bottom: 8px; font-size: 1.1em; }
+        .card p { color: rgba(255,255,255,0.9); font-size: 0.98em; }
+
+        .empresa { text-align: center; }
+
+        /* mostrar logos siempre y sin invertir */
+        .empresa-logo { width: 100%; height: 100px; object-fit: contain; margin-bottom: 14px; filter: none; opacity: 1; transition: transform 0.22s ease; }
+        .empresa:hover .empresa-logo { transform: scale(1.03); }
+
+        ul, ol { margin-left: 26px; margin-top: 10px; margin-bottom: 10px; }
+        li { margin: 8px 0; font-size: 1em; color: rgba(255,255,255,0.9); line-height: 1.6; }
+
+        .estructura-item { background: rgba(97,220,163,0.04); padding: 16px; margin: 12px 0; border-radius: 8px; border-left: 4px solid #61dca3; }
+        .estructura-item strong { color: #61dca3; display: block; margin-bottom: 8px; }
+
+        footer { background: linear-gradient(135deg, rgba(26,58,82,0.95), rgba(44,82,130,0.95)); text-align: center; color: white; padding: 34px 20px; margin-top: 48px; }
+
+        /* ------------------- RESPONSIVE ------------------- */
+        @media (max-width: 768px) {
+            nav ul { flex-direction: column; gap: 0; }
+            header h1 { font-size: 2em; }
+            section { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="backgroundGlitch" class="glitch-background"></canvas>
+
+    <nav>
+        <div class="nav-container">
+            <a href="#inicio" class="logo">🐍 Django</a>
+            <ul>
+                <li><a href="#que-es">¿Qué es?</a></li>
+                <li><a href="#funciones">Funciones</a></li>
+                <li><a href="#estructura">Estructura</a></li>
+                <li><a href="#ventajas">Ventajas</a></li>
+                <li><a href="#desventajas">Desventajas</a></li>
+                <li><a href="#empresas">Empresas</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header id="inicio">
+        <div class="header-content">
+            <h1>Django Framework</h1>
+            <p>El framework más usado en Python para desarrollo web profesional</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <section id="que-es">
+            <h2>¿Qué es Django?</h2>
+            <p>Django es un framework web de alto nivel escrito en Python que permite construir aplicaciones web rápidas, seguras y escalables. Fue creado en 2003 y lanzado en 2005. Sigue el patrón arquitectónico MTV (Model-Template-View), similar a MVC.</p>
+            <div class="highlight">
+                <strong>Características principales:</strong>
+                <ul>
+                    <li>Framework completo "batteries included" (todo incluido)</li>
+                    <li>ORM potente para gestionar bases de datos</li>
+                    <li>Admin automático generado</li>
+                    <li>Sistema de autenticación y autorización</li>
+                    <li>Excelente documentación</li>
+                    <li>Comunidad activa y grande</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="funciones">
+            <h2>Funciones y funcionalidades</h2>
+            <p>Django proporciona una estructura robusta y componentes reutilizables para desarrollar aplicaciones web profesionales. A continuación se listan las funciones principales y algunas funciones especiales que muchas veces se pasan por alto:</p>
+
+            <div class="grid">
+                <div class="card">
+                    <h3>🗄️ Gestión de Base de Datos (ORM)</h3>
+                    <p>ORM integrado que abstrae la complejidad de las bases de datos permitiendo trabajar con objetos Python y migraciones automáticas.</p>
+                </div>
+                <div class="card">
+                    <h3>🔐 Seguridad</h3>
+                    <p>Protección nativa contra vulnerabilidades como CSRF, XSS, SQL Injection y manejo seguro de contraseñas.</p>
+                </div>
+                <div class="card">
+                    <h3>📱 Escalabilidad</h3>
+                    <p>Diseñado para manejar desde pequeños proyectos hasta plataformas con millones de usuarios mediante buenas prácticas y herramientas de caché.</p>
+                </div>
+                <div class="card">
+                    <h3>⚡ Desarrollo Rápido</h3>
+                    <p>Reduce el tiempo de desarrollo con componentes predefinidos, panel de administración automático y utilidades CLI (manage.py).</p>
+                </div>
+                <div class="card">
+                    <h3>🧪 Testing Integrado</h3>
+                    <p>Framework de pruebas integrado para pruebas unitarias y de integración y compatibilidad con herramientas externas.</p>
+                </div>
+                <div class="card">
+                    <h3>📡 APIs REST</h3>
+                    <p>Django REST Framework (DRF) es la solución de referencia para construir APIs RESTful con autenticación, serialización y paginación.</p>
+                </div>
+
+                <div class="card">
+                    <h3>⚙️ Admin Automático</h3>
+                    <p>Genera un panel administrativo listo para usar que se puede personalizar para gestionar datos sin construir vistas CRUD desde cero.</p>
+                </div>
+                <div class="card">
+                    <h3>🔁 Señales (Signals)</h3>
+                    <p>Mecanismo para reaccionar a eventos dentro del ciclo de vida de objetos (ej.: post_save), útil para desacoplar lógica.</p>
+                </div>
+                <div class="card">
+                    <h3>🧰 Middleware</h3>
+                    <p>Permite ejecutar lógica global por petición (autenticación, compresión, manejo de cabeceras) de forma centralizada.</p>
+                </div>
+                <div class="card">
+                    <h3>🌍 Internacionalización (i18n)</h3>
+                    <p>Soporte integrado para traducciones, localización y formatos regionales.</p>
+                </div>
+                <div class="card">
+                    <h3>⚡ Caché</h3>
+                    <p>Integración con sistemas de caché (Redis, Memcached) para mejorar rendimiento en páginas y consultas pesadas.</p>
+                </div>
+                <div class="card">
+                    <h3>🔌 Extensible (Apps)</h3>
+                    <p>Arquitectura basada en apps independientes y reutilizables que facilitan el desarrollo modular y la compartición.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="estructura">
+            <h2>Estructura de Django</h2>
+            <p>Django sigue el patrón <strong>MTV (Model-Template-View)</strong>:</p>
+            <div class="estructura-item">
+                <strong>🗂️ Models (Modelos)</strong>
+                <p>Define la estructura de tus datos. Los modelos son clases Python que representan tablas en la base de datos.</p>
+            </div>
+            <div class="estructura-item">
+                <strong>👁️ Views (Vistas)</strong>
+                <p>Contiene la lógica de negocio. Procesa las solicitudes del usuario y devuelve una respuesta.</p>
+            </div>
+            <div class="estructura-item">
+                <strong>📄 Templates (Plantillas)</strong>
+                <p>Archivos HTML con lógica de plantilla que renderiza los datos.</p>
+            </div>
+            <div class="estructura-item">
+                <strong>🛣️ URLs</strong>
+                <p>Mapea las rutas URL a las vistas correspondientes.</p>
+            </div>
+            <div class="estructura-item">
+                <strong>⚙️ Settings</strong>
+                <p>Configuración global del proyecto (base de datos, aplicaciones instaladas, seguridad).</p>
+            </div>
+            <div class="estructura-item">
+                <strong>📦 Apps (Aplicaciones)</strong>
+                <p>Django organiza el código en aplicaciones reutilizables.</p>
+            </div>
+        </section>
+
+        <section id="ventajas">
+            <h2>Ventajas de Django</h2>
+            <div class="grid">
+                <div class="card"><h3>🚀 Desarrollo Rápido</h3><p>Reduce significativamente el tiempo de desarrollo con componentes predefinidos.</p></div>
+                <div class="card"><h3>🔒 Muy Seguro</h3><p>Protección nativa contra vulnerabilidades OWASP más comunes.</p></div>
+                <div class="card"><h3>📚 Excelente Documentación</h3><p>Una de las mejores documentaciones de cualquier framework.</p></div>
+                <div class="card"><h3>👥 Gran Comunidad</h3><p>Comunidad activa con muchos paquetes disponibles.</p></div>
+                <div class="card"><h3>🔧 Admin Automático</h3><p>Panel de administración generado automáticamente.</p></div>
+                <div class="card"><h3>📈 Escalable</h3><p>Arquitectura permite crear desde pequeños proyectos hasta aplicaciones empresariales.</p></div>
+            </div>
+        </section>
+
+        <section id="desventajas">
+            <h2>Desventajas de Django</h2>
+            <div class="grid">
+                <div class="card"><h3>⚖️ Overhead</h3><p>Para proyectos muy pequeños, Django puede ser excesivo.</p></div>
+                <div class="card"><h3>📚 Curva de Aprendizaje</h3><p>Requiere tiempo para aprender sus conceptos y convenciones.</p></div>
+                <div class="card"><h3>⚡ Rendimiento</h3><p>Puede ser más lento que alternativas más livianas en alta carga si no se optimiza.</p></div>
+                <div class="card"><h3>🎨 Templating Limitado</h3><p>El motor de templates puede ser limitante para algunos casos complejos.</p></div>
+                <div class="card"><h3>🔀 Asincronía</h3><p>El soporte async ha mejorado, pero requiere prácticas cuidadosas para aprovecharlo al máximo.</p></div>
+            </div>
+        </section>
+
+        <section id="empresas">
+            <h2>Empresas que Usan Django</h2>
+            <p>Django es utilizado por muchas empresas y proyectos de todo el mundo. Aquí algunos ejemplos (logos mostrados desde enlaces confiables):</p>
+            <div class="grid">
+                <div class="card empresa">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram" class="empresa-logo">
+                    <h3>Instagram</h3>
+                    <p>La red social de fotos usa Django para partes de su backend.</p>
+                </div>
+
+                <div class="card empresa">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify" class="empresa-logo">
+                    <h3>Spotify</h3>
+                    <p>Utiliza Django en servicios backend y experimentación.</p>
+                </div>
+
+                <div class="card empresa">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png" alt="Pinterest" class="empresa-logo">
+                    <h3>Pinterest</h3>
+                    <p>Construida con Python y Django en sus inicios y para servicios específicos.</p>
+                </div>
+
+                <div class="card empresa">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Dropbox_Icon.svg" alt="Dropbox" class="empresa-logo">
+                    <h3>Dropbox</h3>
+                    <p>Usa Django para partes de su infraestructura.</p>
+                </div>
+
+                <div class="card empresa">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Firefox_logo_2019.svg" alt="Firefox / Mozilla" class="empresa-logo">
+                    <h3>Mozilla / Firefox</h3>
+                    <p>Varios proyectos y herramientas de la comunidad han usado Django.</p>
+                </div>
+
+                <div class="card empresa">
+                    <img src="https://cdn.worldvectorlogo.com/logos/disqus.svg" alt="Disqus" class="empresa-logo">
+                    <h3>Disqus</h3>
+                    <p>Sistema de comentarios construido con Django.</p>
+                </div>
+
+                <div class="card empresa">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub" class="empresa-logo">
+                    <h3>GitHub</h3>
+                    <p>Usado en proyectos y herramientas dentro de la comunidad (ej.: integraciones, paneles de control).</p>
+                </div>
+
+                <div class="card empresa">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Udemy_logo.svg" alt="Udemy" class="empresa-logo">
+                    <h3>Udemy</h3>
+                    <p>Plataforma de educación online que utiliza Django en varios servicios.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Django Framework </p>
+        <p>Desarrollado con Python y Django</p>
+    </footer>
+
+    <script>
+        class MatrixGlitch {
+            constructor(id, options = {}) {
+                this.canvas = document.getElementById(id);
+                if (!this.canvas) return;
+                this.ctx = this.canvas.getContext('2d');
+                this.characters = options.characters || 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*()';
+                this.fontSize = options.fontSize || 14;
+                this.columns = 0;
+                this.drops = [];
+                this.colors = options.colors || ['#1b3b2f', '#61dca3', '#61b3dc'];
+                window.addEventListener('resize', () => this.resize());
+                this.resize();
+                this.running = true;
+                this.draw();
+            }
+
+            resize() {
+                const dpr = window.devicePixelRatio || 1;
+                this.canvas.width = Math.floor(window.innerWidth * dpr);
+                this.canvas.height = Math.floor(window.innerHeight * dpr);
+                this.canvas.style.width = window.innerWidth + 'px';
+                this.canvas.style.height = window.innerHeight + 'px';
+                this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                this.columns = Math.floor(window.innerWidth / this.fontSize);
+                this.drops = Array(this.columns).fill(1);
+            }
+
+            draw() {
+                if (!this.running) return;
+                this.ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                this.ctx.font = `${this.fontSize}px monospace`;
+                for (let i = 0; i < this.drops.length; i++) {
+                    const text = this.characters.charAt(Math.floor(Math.random() * this.characters.length));
+                    const x = i * this.fontSize;
+                    const y = this.drops[i] * this.fontSize;
+                    const color = this.colors[Math.floor(Math.random() * this.colors.length)];
+                    this.ctx.fillStyle = color;
+                    this.ctx.fillText(text, x, y);
+                    if (y > window.innerHeight && Math.random() > 0.98) this.drops[i] = 0;
+                    this.drops[i]++;
+                }
+                requestAnimationFrame(() => this.draw());
+            }
+
+            stop() { this.running = false; }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new MatrixGlitch('backgroundGlitch', { fontSize: 14 });
+        });
+    </script>
+</body>
+</html>
