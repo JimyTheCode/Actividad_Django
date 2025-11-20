@@ -1,0 +1,30 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}
+Detalle del Miembro | {{ mymember.firstname }} {{ mymember.lastname }}
+{% endblock %}
+
+{% block content %}
+
+<h1 class="section-title">{{ mymember.firstname }} {{ mymember.lastname }}</h1>
+
+<div class="member-card" style="max-width: 500px; margin: 0 auto;">
+
+    {% if mymember.photo %}
+        <img src="{{ mymember.photo.url }}" alt="Foto de {{ mymember.firstname }}" style="width: 150px; border-radius: 50%; margin-bottom: 1rem;">
+    {% endif %}
+
+    <p><strong>📞 Teléfono:</strong> {{ mymember.phone }}</p>
+    <p><strong>📅 Miembro desde:</strong> {{ mymember.joined_date }}</p>
+    <p><strong>🪪 Documento:</strong> {{ mymember.document_number }}</p>
+    <p><strong>🏡 Dirección:</strong> {{ mymember.address }}</p>
+    <p><strong>📧 Email:</strong> {{ mymember.email }}</p>
+
+    <br>
+
+    <p><a href="/members" style="color: #667eea; font-weight: bold; text-decoration: none;">⬅ Volver a Miembros</a></p>
+
+</div>
+
+{% endblock %}

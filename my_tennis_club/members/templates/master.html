@@ -1,0 +1,208 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{% block title %}Club de Tenis{% endblock %}</title>
+
+  <!-- Fuente -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg-1: #0b1224;
+      --bg-2: #0e3a5d;
+      --accent: #39e6c4;
+      --accent-2: #58d1ff;
+      --white: #ffffff;
+      --muted: rgba(255,255,255,0.75);
+      --radius: 14px;
+      --max-w: 1200px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:'Inter',sans-serif;
+      background:linear-gradient(135deg,var(--bg-1),var(--bg-2));
+      color:var(--white);
+      min-height:100vh;
+    }
+
+    /* HEADER */
+    header{
+      position:sticky; top:0; z-index:100;
+      padding:10px 0;
+      background:rgba(255,255,255,0.05);
+      backdrop-filter:blur(6px);
+      border-bottom:1px solid rgba(255,255,255,0.04);
+    }
+
+    .header-inner{
+      max-width:var(--max-w);
+      margin:auto;
+      padding:0 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .brand{display:flex;align-items:center;gap:10px;}
+    .brand img{
+      width:50px;height:50px;border-radius:10px;object-fit:cover;
+      box-shadow:0 4px 12px rgba(0,0,0,0.35);
+    }
+    .brand span{
+      font-size:1.3rem;font-weight:800;letter-spacing:.4px;
+    }
+
+    nav a{
+      color:var(--white);
+      text-decoration:none;
+      padding:8px 12px;
+      border-radius:8px;
+      font-weight:600;
+      transition:.2s;
+    }
+    nav a:hover{
+      background:rgba(255,255,255,0.08);
+    }
+
+    /* HERO */
+    .hero-wrap{
+      max-width:var(--max-w);
+      margin:30px auto;
+      padding:0 20px;
+      display:grid;
+      grid-template-columns:1.2fr 0.8fr;
+      gap:20px;
+    }
+    .hero-card{
+      background:rgba(255,255,255,0.05);
+      backdrop-filter: blur(8px);
+      padding:30px;
+      border-radius:var(--radius);
+      box-shadow:0 12px 28px rgba(0,0,0,0.25);
+    }
+    .hero-card h1{
+      margin:0 0 15px;
+      font-size:2.4rem;
+    }
+    .hero-card p{
+      margin-bottom:20px;
+      color:var(--muted);
+    }
+
+    .hero-btn{
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:#05101a;
+      padding:12px 20px;
+      border-radius:12px;
+      font-weight:700;
+      text-decoration:none;
+    }
+
+    .hero-image{
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow:0 15px 30px rgba(0,0,0,0.35);
+    }
+    .hero-image img{
+      width:100%;height:100%;object-fit:cover;
+    }
+
+    /* MAIN */
+    main{
+      max-width:var(--max-w);
+      margin:auto;
+      padding:20px;
+    }
+
+    /* FOOTER */
+    footer{
+      margin-top:40px;
+      padding:40px 20px;
+      background:rgba(255,255,255,0.04);
+      border-top:1px solid rgba(255,255,255,0.05);
+    }
+
+    footer .footer-inner{
+      max-width:var(--max-w);
+      margin:auto;
+    }
+
+    .footer-title{font-size:1.4rem;font-weight:800;margin-bottom:10px;}
+    .footer-text{color:var(--muted);line-height:1.6;}
+
+    .copy{
+      margin-top:20px;
+      color:var(--muted);
+      font-size:.9rem;
+    }
+
+    @media(max-width:900px){
+      .hero-wrap{grid-template-columns:1fr;}
+      .header-inner{padding:0 12px}
+    }
+  </style>
+
+  {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <img src="https://img.freepik.com/vector-premium/logotipo-deportivo-diseno-logotipo-tenis_331749-147.jpg" alt="Logo">
+      <span>Club de Tenis</span>
+    </div>
+
+    <nav>
+      <a href="/">Inicio</a>
+      <a href="{% url 'members' %}">Miembros</a>
+      <a href="#about">Sobre nosotros</a>
+    </nav>
+  </div>
+</header>
+
+
+{% block hero %}
+<section class="hero-wrap">
+  <div class="hero-card">
+    <h1>Bienvenido al Club de Tenis</h1>
+    <p>Descubre nuestra comunidad, encuentra jugadores y explora el listado completo de miembros.</p>
+
+    <a href="{% url 'members' %}" class="hero-btn">Ver Miembros</a>
+  </div>
+
+  <div class="hero-image">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKsspZl_96u5xOhHfDgrfBZAg03-t86zgb3A&s" alt="">
+  </div>
+</section>
+{% endblock %}
+
+
+<main>
+  {% block content %}{% endblock %}
+</main>
+
+
+<footer id="about">
+  <div class="footer-inner">
+    <div class="footer-title">Sobre el Club de Tenis</div>
+    <p class="footer-text">
+      Somos un club dedicado a promover el deporte, la salud y la convivencia.  
+      Organizamos torneos, entrenamientos y actividades sociales durante todo el año.
+    </p>
+
+    <div class="copy">
+      © {% now "Y" %} Club de Tenis — Todos los derechos reservados.
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

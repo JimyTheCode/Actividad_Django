@@ -1,0 +1,96 @@
+{% extends "master.html" %}
+
+{% block title %}Lista de Miembros{% endblock %}
+
+{% block content %}
+
+<h1>Miembros del Club</h1>
+
+<a href="#" class="btn-main-tennis" onclick="document.getElementById('members-container').style.display='block'">
+    🎾 Mostrar miembros
+</a>
+
+<style>
+  .btn-main-tennis {
+    display: inline-block;
+    padding: 12px 22px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    border-radius: 10px;
+    text-decoration: none;
+    border: 2px solid #ffffff30;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transition: 0.3s ease;
+  }
+
+  .btn-main-tennis:hover {
+    background: linear-gradient(135deg, #27ae60, #1f8f4d);
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  }
+
+  .btn-main-tennis:active {
+    transform: scale(0.98);
+  }
+</style>
+
+
+<div id="members-container" style="display:none; margin-top:20px;">
+
+    <ul class="member-list">
+        {% for x in mymembers %}
+            <li class="member-item">
+                <span>{{ x.firstname }} {{ x.lastname }}</span>
+               <a href="/members/details/{{ x.id }}" class="btn-details">Ver detalles</a>
+
+<style>
+  .btn-details {
+    display: inline-block;
+    padding: 8px 16px;
+    background: #3498db;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.3s ease;
+  }
+
+  .btn-details:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+  }
+</style>
+
+            </li>
+        {% endfor %}
+    </ul>
+
+</div>
+
+<p>
+  <a href="/" class="btn-back">Volver al inicio</a>
+</p>
+
+<style>
+  .btn-back {
+    display: inline-block;
+    padding: 10px 18px;
+    background: #2eccb7ff;
+    color: #050505ff;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.3s ease;
+  }
+
+  .btn-back:hover {
+    background: #2eccb7ff;
+    transform: translateY(-2px);
+  }
+</style>
+
+
+{% endblock %}

@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 404 – No encontrado</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+
+            /* Fondo grande */
+            background: url("https://img1.wallspic.com/previews/4/1/9/9/19914/19914-el_campeonato_de_wimbledon-pelota_de_tenis-pelotas_de_tenis-x750.jpg")
+                       no-repeat center center fixed;
+            background-size: cover;
+
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+
+            backdrop-filter: blur(3px);
+        }
+
+        .overlay {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            padding: 3rem 2.5rem;
+            border-radius: 28px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.30);
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .image-404 {
+            width: 290px;            /* Imagen más grande */
+            border-radius: 30px;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+        }
+
+        p {
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: #ffffff;
+            text-shadow: 0 3px 6px rgba(0,0,0,0.4);
+            margin-bottom: 2.2rem;
+        }
+
+        /* Botón profesional */
+        .btn-home {
+            display: inline-block;
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
+            background: rgba(255,255,255,0.85);
+            color: #0b65ff;
+            font-weight: 600;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+            transition: 0.25s ease;
+        }
+
+        .btn-home:hover {
+            background: white;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+            transform: translateY(-2px) scale(1.04);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay">
+
+        <img src="https://static.vecteezy.com/system/resources/previews/003/335/821/non_2x/error-404-with-the-cute-tennis-ball-mascot-free-vector.jpg"
+             alt="Error Tennis"
+             class="image-404">
+
+        <h2>Esta pelota parece haberse ido fuera de la cancha.</h2>
+
+        <a href="/" class="btn-home">Volver al inicio</a>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+{% extends "master.html" %}
+
+{% block title %}
+  My Tennis Club
+{% endblock %}
+
+
+{% block content %}
+  <h1>My Tennis Club</h1>
+  
+  <h1 class="title-members">
+  <a href="members/" class="btn-members-link">VER MIEMBROS </a>
+</h1>
+
+<style>
+  .title-members {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+
+  .btn-members-link {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    padding: 8px 16px;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-decoration: none;
+    transition: 0.3s ease;
+    border: 2px solid #ffffff20;
+  }
+
+  .btn-members-link:hover {
+    background: linear-gradient(135deg, #27ae60, #1f8f4d);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.35);
+  }
+</style>
+
+  
+{% endblock %}
